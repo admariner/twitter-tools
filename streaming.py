@@ -14,9 +14,12 @@ access_token_secret = ""
 class StdOutListener(StreamListener):
 
     def on_status(self, status):
+        tweet_url = (
+            f"http://twitter.com/{status.user.screen_name}/status/{status.id_str}"
+        )
+
         tweet_url = "http://twitter.com/" + status.user.screen_name + "/status/" + status.id_str
-        print "TWEET", status.text
-        print "URL", tweet_url
+        tweet_url = "http://twitter.com/" + status.user.screen_name + "/status/" + status.id_str
         save_to_db(status.user.screen_name, status.text, tweet_url, status.id_str)
 
     def on_error(self, status):
@@ -29,8 +32,6 @@ if __name__ == "__main__":
 
     ids = []
     with open("ids.csv") as f:
-        for row in f:
-            ids.append(row)
-
+        ids.extend(iter(f))
     stream = Stream(auth, l)
     stream.filter(ids)

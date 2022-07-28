@@ -14,8 +14,6 @@ def query(url):
     r = requests.get(url)
     if r.status_code != 200:
         return True
-    else:
-        print "Tweet still exists"
 
 
 def read_database(db):
